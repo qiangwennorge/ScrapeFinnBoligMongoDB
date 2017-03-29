@@ -10,6 +10,9 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pymongo
+import string
+from nltk.corpus import stopwords
+import operator
 
 # Get Bolig information in each page
 
@@ -57,4 +60,26 @@ databasehandler = clientmongo["FinnBoligDB"]
 for EachBoligDoc in BoligDoc:
     databasehandler.boligcollection.insert(EachBoligDoc,safe=True)
 
+# Fetch all bolig title
+BoligCollectionDoc = databasehandler.boligcollection.find()
+BoligTitleTextSum = ""
+for doc in BoligCollectionDoc[2:]:
+    BoligTitleText = doc.get("boligtitle")
+    BoligTitleTextSum = BoligTitleTextSum + " " + BoligTitleText
+
+BoligTitleTextSum = BoligTitleTextSum.replace(string.punctuation,"")
+
+# Count word frequency
+worddic = {}
+for word in BoligTitleTextSum.split():
+    if word not in worddic:
+        worddic[word] = 1
+    else:
+        worddic[word] = worddic[word] + 1
+
+# Sort word based on frequency
+worddicsorted = sorted(worddic.items(),key=operator.itemgetter(1),reverse=True)
+
+# Remove stopwords
+stop_words = stopwords.words('English')
 
