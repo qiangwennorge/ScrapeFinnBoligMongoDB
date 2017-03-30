@@ -13,6 +13,11 @@ import pymongo
 import string
 from nltk.corpus import stopwords
 import operator
+from wordcloud import WordCloud, STOPWORDS
+from os import path
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Get Bolig information in each page
 
@@ -80,6 +85,37 @@ for word in BoligTitleTextSum.split():
 # Sort word based on frequency
 worddicsorted = sorted(worddic.items(),key=operator.itemgetter(1),reverse=True)
 
-# Remove stopwords
-stop_words = stopwords.words('English')
+# Define path
+d = path.dirname(__file__)
 
+# Read the mask image
+norway_mask = np.array(Image.open(path.join(d,"Country_map-Norway.png")))
+
+# Define stopwords
+stop_words = ['-','og','med','i','til','|','fra','av','på','1','2','3','4','5','6','7','8','9','0']
+
+boligwordcloud = WordCloud(background_color="white",max_words=2000,mask=norway_mask,stopwords=stop_words)
+
+# Generate word cloud
+boligwordcloud.generate_from_frequencies(dict(worddicsorted))
+
+# Store to file
+boligwordcloud.to_file(path.join(d,"Country_map-Norway.png"))
+
+# Show
+plt.imshow(boligwordcloud,interpolation='bilinear')
+plt.axis("off")
+plt.figure()
+plt.imshow(norway_mask,cmap=plt.cm.gray,interpolation='bilinear')
+plt.axis("off")
+plt.show()
+
+# Remove stopwords
+worddicclean = []
+for k,v in worddicsorted:
+    if k not in stop_words:
+        worddicclean.append((k,v))
+
+# General a word cloud image
+
+#d = path.dirname(__file__)
