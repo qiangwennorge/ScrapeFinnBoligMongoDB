@@ -50,7 +50,7 @@ NextPageNum = int(re.findall(r'page=(\d+)', SecondPage)[0])
 
 # Go to the rest pages
 
-for PageNum in range(NextPageNum,3):
+for PageNum in range(NextPageNum,100):
     NextPage = re.sub(r'page=(\d+)', 'page='+str(PageNum), SecondPage)
     NextUrl = 'https://m.finn.no' + NextPage
     NextResponse = requests.get(NextUrl)
@@ -98,17 +98,17 @@ for k,v in worddicsorted:
 d = path.dirname(__file__)
 
 # Read the mask image
-norway_mask = np.array(Image.open(path.join(d,"alice_mask.png")))
+norway_mask = np.array(Image.open(path.join(d,"norwaymap.jpg")))
 
 boligwordcloud = WordCloud(background_color="white",max_words=2000,mask=norway_mask,stopwords=stop_words)
 
 # Generate word cloud
 boligwordcloud.generate_from_frequencies(dict(worddicclean))
-print worddicclean
+#print worddicclean
 
 
 # Store to file
-boligwordcloud.to_file(path.join(d,"alice_mask_output.png"))
+boligwordcloud.to_file(path.join(d,"norwaymap_mask_output.png"))
 
 # Show
 plt.imshow(boligwordcloud,interpolation='bilinear')
