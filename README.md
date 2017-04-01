@@ -1,5 +1,4 @@
-# ScrapeFinnBoligMongoDB
-# Scrape finn.no bolig information by use of MongoDB
+# Scrape finn.no real estate information by use of MongoDB
 
 
 This script is trying to scrape the real estate information from www.finn.no.
