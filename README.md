@@ -16,27 +16,18 @@ Some common stopwords like "av", "en", "og" etc. will be excluded for sorting.
 
 By scraping the first 100 pages of real estate information, the 10 most frequent words that Norwegian real estate client would like to use are:
 
-leilighet: 2672 -> apartment 
-
-3-rooms: 2037 -> 3-rooms
-
-enebolig: 2027 -> single-family detached home
-
-beliggenhet:1624 -> position
-
-utsikt: 1584 -> overview
-
-flott: 1416 -> great
-
-soverom: 1241 -> bedroom
-
-balkong: 1171 -> balcony
-
-meget: 1159 -> very
-
-gode: 1044 -> good
-
+* leilighet: 2672 -> apartment 
+* 3-rooms: 2037 -> 3-rooms
+* enebolig: 2027 -> single-family detached home
+* beliggenhet:1624 -> position
+* utsikt: 1584 -> overview
+* flott: 1416 -> great
+* soverom: 1241 -> bedroom
+* balkong: 1171 -> balcony
+* meget: 1159 -> very
+* gode: 1044 -> good
 
 
 All this words will in the end masked in a map of Norway, by using a Python package wordcloud.
 
+![alt text](https://github.com/qiangwennorge/ScrapeFinnBoligMongoDB/blob/master/norwaymap_mask_output.png "norwaymap_mask_output")
